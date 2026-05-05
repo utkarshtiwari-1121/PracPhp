@@ -1,0 +1,68 @@
+/* Reset some default spacing */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #433e3e;
+    padding: 20px;
+    color: white;
+}
+
+/* Headings */
+h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+/* Form container */
+form {
+    background-color: #625b5b;
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #5a5050;
+    border-radius: 6px;
+    max-width: 400px;
+}
+
+/* Labels */
+label {
+    font-weight: 500;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Inputs, select, textarea */
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #5a5050;
+    color: white;
+}
+
+/* Button & submit */
+button,
+input[type="submit"] {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    background-color: #333;
+    color: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Hover effect */
+button:hover,
+input[type="submit"]:hover {
+    background-color: #555;
+}

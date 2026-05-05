@@ -1,0 +1,296 @@
+    <form method="POST" action="validate.php">
+
+        <h3>All Inputs Form</h3>
+
+        <!-- text -->
+        <input type="text" name="name" placeholder="Name" required>
+
+        <!-- email -->
+        <input type="email" name="email" placeholder="Email" required>
+
+        <!-- number -->
+        <input type="number" name="age" placeholder="Age">
+
+        <!-- password -->
+        <input type="password" name="password" placeholder="Password">
+
+        <!-- tel -->
+        <input type="tel" name="phone" placeholder="Phone">
+
+        <!-- date -->
+        <input type="date" name="dob">
+
+        <!-- checkbox -->
+        <label><input type="checkbox" name="terms" value="yes"> Accept Terms</label>
+
+        <!-- radio -->
+        <div>
+            <label><input type="radio" name="gender" value="male"> Male</label>
+            <label><input type="radio" name="gender" value="female"> Female</label>
+        </div>
+
+        <!-- file -->
+        <input type="file" name="file">
+
+        <!-- range -->
+        <input type="range" name="range" min="0" max="100">
+
+        <!-- color -->
+        <input type="color" name="color">
+
+        <!-- search -->
+        <input type="search" name="search" placeholder="Search">
+
+        <!-- url -->
+        <input type="url" name="website" placeholder="Website">
+
+        <!-- textarea -->
+        <textarea name="message" placeholder="Your message"></textarea>
+
+        <!-- select -->
+        <select name="country">
+            <option selected disabled value="">Select Country</option>
+            <option value="india">India</option>
+            <option value="usa">USA</option>
+            <option value="ireland">Ireland</option>
+            <option value="switzerland">Switzerland</option>
+            <option value="austria">Austria</option>
+            <option value="belgium">Belgium</option>
+        </select>
+        <!-- datalist -->
+        <input list="browsers" name="browser" placeholder="Choose browser">
+        <datalist id="browsers">
+            <option value="Chrome">
+            <option value="Firefox">
+            <option value="Edge">
+            <option value="Safari">
+            <option value="Opera">
+            <option value="Brave">
+            <option value="Waterfox">
+            <option value="Pale Moon">
+        </datalist>
+        <!-- output -->
+        <input type="range" name="rating" min="0" max="10" oninput="result.value = rating.value">
+        <output name="result">5</output>
+
+        <!-- hidden -->
+        <input type="hidden" name="user_id" value="123">
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+
+
+
+
+    <h2>Simple Calculator</h2>
+
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
+        <!-- First number input -->
+        <label for="num1">Enter First Number:</label>
+        <input type="number" id="num1" name="num1" step="any">
+
+        <!-- Operator selection dropdown -->
+        <label for="operator">Select Operation:</label>
+        <select id="operator" name="operator">
+            <option disabled selected value="">-- Select --</option>
+            <option value="add">+ (Addition)</option>
+            <option value="subtract">- (Subtraction)</option>
+            <option value="multiply">× (Multiplication)</option>
+            <option value="divide">÷ (Division)</option>
+        </select>
+
+        <!-- Second number input -->
+        <label for="num2">Enter Second Number:</label>
+        <input type="number" id="num2" name="num2" step="any">
+
+        <!-- Submit button -->
+        <button type="submit">Calculate</button>
+    </form>
+
+
+    <?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $number1 = filter_input(INPUT_POST, "num1", FILTER_SANITIZE_NUMBER_FLOAT);
+        $number2 = filter_input(INPUT_POST, "num2", FILTER_SANITIZE_NUMBER_FLOAT);
+        // $operator = filter_input(INPUT_POST, "operator", FILTER_SANITIZE_STRING);
+        $operator = htmlspecialchars($_POST['operator']);
+
+        $error = true;
+        if (empty($number1) || empty($number2) || empty($operator)) {
+            echo "fill the details";
+            $error = true;
+
+            exit();
+        }
+
+        $error = false;
+        if (!is_numeric($number1) || !is_numeric($number2)) {
+            echo "please enter numeric char only";
+        }
+
+        if (!$error) {
+            $value = 0;
+
+            switch ($operator) {
+                case "add":
+                    $value = $number1 + $number2;
+                    break;
+
+                case "subtract":
+                    $value = $number1 - $number2;
+                    break;
+
+                case "divide":
+                    $value = $number1 / $number2;
+                    break;
+
+                case "multiply":
+                    $value = $number1 * $number2;
+                    break;
+            }
+        }
+        echo "result = $value";
+    }
+    ?>
+
+
+
+🧠 Keep Form Values After Submit (Super Simple)
+
+❓ Problem
+👉 Jab user form submit karta hai:
+
+
+❌ Saare inputs blank ho jaate hain
+
+
+❌ User ko dobara sab fill karna padta hai
+
+
+
+🎯 Solution
+👉 Form ke andar PHP use karke old values wapas dikhate hain
+📌 Simple line:
+👉 "User jo likhe, wo submit ke baad bhi dikhe"
+
+⭐ Important Concept: value Attribute
+👉 value = input ke andar jo text dikhega
+
+✅ Text Input Example
+<input type="text" name="name" value="<?php echo $name; ?>">
+🧠 Meaning:
+
+
+$name me jo value hai → input me show hogi
+
+
+
+🎯 Real-Life Examples
+
+🧪 Example 1: Name Field
+<input type="text" name="name" value="<?php echo $name; ?>">
+👉 User ne "Utkarsh" likha → submit ke baad bhi "Utkarsh" dikhega ✅
+
+🧪 Example 2: Email Field
+<input type="text" name="email" value="<?php echo $email; ?>">
+
+🧪 Example 3: Website Field
+<input type="text" name="website" value="<?php echo $website; ?>">
+
+⭐ Important Concept: <textarea>
+👉 textarea me value attribute nahi hota ❌
+👉 Value tags ke beech me likhte hain
+
+✅ Example:
+<textarea name="comment"><?php echo $comment; ?></textarea>
+
+🧠 Samajh:
+
+
+<input> → value attribute use karta hai
+
+
+<textarea> → andar content likhte hain
+
+
+
+⭐ Important Concept: Radio Buttons
+👉 Radio buttons me checked attribute use hota hai
+👉 checked = selected option
+
+✅ Example:
+<input type="radio" name="gender" value="male"<?php if ($gender == "male") echo "checked"; ?>>Male
+
+🧠 Meaning:
+
+
+Agar $gender == "male" → radio select hoga
+
+
+
+🎯 Real-Life Examples
+
+🧪 Example 1: Female Selected
+<input type="radio" name="gender" value="female"<?php if ($gender == "female") echo "checked"; ?>>
+
+🧪 Example 2: Male Selected
+<input type="radio" name="gender" value="male"<?php if ($gender == "male") echo "checked"; ?>>
+
+🧪 Example 3: Safe Check (Best Practice)
+<?php if (isset($gender) && $gender == "male") echo "checked"; ?>
+👉 isset() = check karta hai variable exist karta hai ya nahi
+
+⭐ Important Concept: isset()
+👉 isset() = check karta hai variable set hai ya nahi
+📌 Use kyu karte hain?
+👉 Error avoid karne ke liye
+
+🔥 Best Practice (Very Important)
+👉 Direct variable use na karo
+👉 Use:
+<?php echo $_POST['name'] ?? ''; ?>
+
+🧠 Meaning:
+
+
+?? = agar value nahi hai → empty string use karo
+
+
+
+🎯 Combined Example (Best Way)
+<input type="text" name="name" value="<?php echo $_POST['name'] ?? ''; ?>"><textarea name="comment"><?php echo $_POST['comment'] ?? ''; ?></textarea><input type="radio" name="gender" value="male"<?php if (($_POST['gender'] ?? '') == "male") echo "checked"; ?>>
+
+🚀 What You Achieve
+👉 Now:
+
+
+✅ Form values delete nahi honge
+
+
+✅ User experience better
+
+
+✅ Real-world behavior
+
+
+
+🧾 Final Simple Summary
+👉 Problem:
+
+
+Submit ke baad form empty ho jaata hai
+
+
+👉 Solution:
+
+
+PHP se values wapas fill karo
+
+
+💡 Simple line:
+👉 "User ka input save karke dobara show karo"
+
+Agar chaho next step me main:
+👉 error + value + success message (complete professional form) bana ke sikha sakta hoon 😎
