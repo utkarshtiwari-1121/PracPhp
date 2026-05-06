@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 ?>
 
 <html lang="en">
@@ -48,52 +48,37 @@ session_start();
 
 
     <!-- <form method="POST" action="validate.php">     <form method="POST" action="validate.php" id= "myForm">-->
-    <form method="POST" id= "myForm">
+    <form method="POST" id="myForm">
         <h3>Simple Form</h3>
 
 
-        <input type="text" name="name" value="<?php echo $_SESSION['old']['name'] ?? ''; ?>"
+        <input type="text" name="name" value=""
             placeholder="Name">
-        <span id="nameErr" style="color:red;"><?php echo $_SESSION['nameErr']; ?></span>
+        <span id="nameErr" style="color:red;"></span>
 
 
 
-        <input type="email" name="email" value="<?php echo $_SESSION['old']['email'] ?? ''; ?>" placeholder="Email">
-        <span id="emailErr" style="color:red;"><?php echo $_SESSION['emailErr']; ?></span>
+        <input type="email" name="email" value="" placeholder="Email">
+        <span id="emailErr" style="color:red;"></span>
 
 
-        <input type="tel" name="phone" value="<?php echo $_SESSION['old']['phone'] ?? ''; ?>" placeholder="Phone">
-        <span id="phoneErr" style="color:red;"><?php echo $_SESSION['phoneErr']; ?></span>
+        <input type="tel" name="phone" value="" placeholder="Phone">
+        <span id="phoneErr" style="color:red;"></span>
 
 
-        <input type="number" name="age" value="<?php echo $_SESSION['old']['age'] ?? ''; ?>" placeholder="Age">
-        <span id="ageErr" style="color:red;"><?php echo $_SESSION['ageErr']; ?></span>
-        <input type="password" name="password" value="<?php echo $_SESSION['old']['password'] ?? ''; ?>" placeholder="Password">
-        <span id="passwordErr" style="color:red;"><?php echo $_SESSION['passwordErr']; ?></span>
+        <input type="number" name="age" value="" placeholder="Age">
+        <span id="ageErr" style="color:red;"></span>
+        <input type="password" name="password" value="" placeholder="Password">
+        <span id="passwordErr" style="color:red;"></span>
 
 
-        <input type="url" name="website" value="<?php echo $_SESSION['old']['website'] ?? ''; ?>" placeholder="Website">
-        <span id="websiteErr" style="color:red;"><?php echo $_SESSION['websiteErr']; ?></span>
+        <input type="url" name="website" value="" placeholder="Website">
+        <span id="websiteErr" style="color:red;"></span>
 
         <button type="submit">Submit</button>
     </form>
 
     <?php
-    // if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    //     unset(
-    //         $_SESSION['nameErr'],
-    //         $_SESSION['emailErr'],
-    //         $_SESSION['phoneErr'],
-    //         $_SESSION['ageErr'],
-    //         $_SESSION['passwordErr'],
-    //         $_SESSION['websiteErr'],
-    //         $_SESSION['old']
-    //     );
-    // }
-
-    // if (isset($_GET['success'])) {
-    //     echo "<script>alert('Form submitted successfully!');</script>";
-    // }
     ?>
 
 </body>

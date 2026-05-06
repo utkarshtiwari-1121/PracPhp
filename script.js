@@ -6,9 +6,9 @@ form.addEventListener("submit", async (e) => {
 
   const formData = new FormData(form);
 
-  // for(let [key, value] of formData.entries()) {
-  //     console.log(key , value);
-  // }
+//   for(let [key, value] of formData.entries()) {
+//       console.log(key , value);
+//   }
   const response = await fetch("validate.php", {
     method: "POST",
     body: formData,
@@ -20,7 +20,6 @@ form.addEventListener("submit", async (e) => {
   });
 
       if (data.status === "error") {
-        // errors show करो
         for (let key in data.errors) {
             document.getElementById(key + "Err").innerText = data.errors[key];
         }
