@@ -156,141 +156,206 @@
     ?>
 
 
+************************************************************************************************
+************************************************************************************************
+    validate .php file 
+
+
+       <!-- from here validation .php start which is diff file in which my php code for validation is done -->
+   <?php
+    session_start();
+    $nameErr = $emailErr = $phoneErr = $ageErr = $passwordErr = $websiteErr = "";
+    $hasError = false;
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (empty($_POST['name'])) {
+            $nameErr = "Name is required";
+            $_SESSION['nameErr'] = $nameErr;
+            $hasError = true;
+        }
+
+        if (empty($_POST['email'])) {
+            $emailErr = "Email is required";
+            $_SESSION['emailErr'] = $emailErr;
+            $hasError = true;
+        } else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Invalid email format";
+            $_SESSION['emailErr'] = $emailErr;
+            $hasError = true;
+        }
+
+        if (empty($_POST['phone'])) {
+            $phoneErr =  "Phone number is required";
+            $_SESSION['phoneErr'] = $phoneErr;
+            $hasError = true;
+        } else if (!preg_match("/^[0-9]{10}$/", $_POST['phone'])) {
+            $phoneErr = "Invalid phone number";
+            $_SESSION['phoneErr'] = $phoneErr;
+            $hasError = true;
+        }
+
+        if (empty($_POST['age'])) {
+            $ageErr = "Age is required";
+            $_SESSION['ageErr'] = $ageErr;
+            $hasError = true;
+        } else if (!filter_var($_POST['age'], FILTER_VALIDATE_INT)) {
+            $ageErr = "Invalid age";
+            $_SESSION['ageErr'] = $ageErr;
+            $hasError = true;
+        }
+
+        if (empty($_POST['password'])) {
+            $passwordErr = "Password is required";
+            $_SESSION['passwordErr'] = $passwordErr;
+            $hasError = true;
+        } else if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&]).{8,}$/", $_POST['password'])) {
+            $passwordErr = "Password must be at least 8 characters and include uppercase, lowercase, and special character";
+            $_SESSION['passwordErr'] = $passwordErr;
+            $hasError = true;
+        }
+
+        if (empty($_POST['website'])) {
+            $websiteErr = "Website is required";
+            $_SESSION['websiteErr'] = $websiteErr;
+            $hasError = true;
+        } else if (!filter_var($_POST['website'], FILTER_VALIDATE_URL)) {
+            $websiteErr = "Invalid URL";
+            $_SESSION['websiteErr'] = $websiteErr;
+            $hasError = true;
+        }
 
-🧠 Keep Form Values After Submit (Super Simple)
+        if ($hasError) {
+            $_SESSION['old'] = $_POST;
+            // header("Location: index.php");
+            exit("Something went wrong");
+        }
 
-❓ Problem
-👉 Jab user form submit karta hai:
+        unset(
+            $_SESSION['nameErr'],
+            $_SESSION['emailErr'],
+            $_SESSION['phoneErr'],
+            $_SESSION['ageErr'],
+            $_SESSION['passwordErr'],
+            $_SESSION['websiteErr'],
+            $_SESSION['old']
+        );
+        // header("Location: index.php?success");
+        exit();
+    } ?>
+
+
 
+
+
+________________________________________________________________________________________________
+
+
+
+<?php
+session_start();
+?>
 
-❌ Saare inputs blank ho jaate hain
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-❌ User ko dobara sab fill karna padta hai
+<body>
+    <script src="script.js" defer></script>
+    <!-- <?php
+            echo "Hello, World! its php";
 
+            ?> -->
 
+    <!-- <h2>Contact Form</h2>
+    <form action="formhandling.php" method="POST">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name"><br><br>
 
-🎯 Solution
-👉 Form ke andar PHP use karke old values wapas dikhate hain
-📌 Simple line:
-👉 "User jo likhe, wo submit ke baad bhi dikhe"
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email"><br><br>
 
-⭐ Important Concept: value Attribute
-👉 value = input ke andar jo text dikhega
+        <label for="subject">Subject:</label><br>
+        <select id="subject" name="subject">
+            <option selected disabled value="">-- Select a subject --</option>
+            <option value="general">General Inquiry</option>
+            <option value="support">Technical Support</option>
+            <option value="billing">Billing Question</option>
+            <option value="feedback">Feedback</option>
+            <option value="other">Other</option>
+        </select><br><br>
 
-✅ Text Input Example
-<input type="text" name="name" value="<?php echo $name; ?>">
-🧠 Meaning:
 
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" cols="30"></textarea><br><br>
 
-$name me jo value hai → input me show hogi
+        <input type="submit" value="Submit">
+    </form> -->
 
 
 
-🎯 Real-Life Examples
 
-🧪 Example 1: Name Field
-<input type="text" name="name" value="<?php echo $name; ?>">
-👉 User ne "Utkarsh" likha → submit ke baad bhi "Utkarsh" dikhega ✅
 
-🧪 Example 2: Email Field
-<input type="text" name="email" value="<?php echo $email; ?>">
+    <!-- <form method="POST" action="validate.php">     <form method="POST" action="validate.php" id= "myForm">-->
+    <form method="POST" id= "myForm">
+        <h3>Simple Form</h3>
 
-🧪 Example 3: Website Field
-<input type="text" name="website" value="<?php echo $website; ?>">
 
-⭐ Important Concept: <textarea>
-👉 textarea me value attribute nahi hota ❌
-👉 Value tags ke beech me likhte hain
+        <input type="text" name="name" value="<?php echo $_SESSION['old']['name'] ?? ''; ?>"
+            placeholder="Name">
+        <span id="nameErr" style="color:red;"><?php echo $_SESSION['nameErr']; ?></span>
 
-✅ Example:
-<textarea name="comment"><?php echo $comment; ?></textarea>
 
-🧠 Samajh:
 
+        <input type="email" name="email" value="<?php echo $_SESSION['old']['email'] ?? ''; ?>" placeholder="Email">
+        <span id="emailErr" style="color:red;"><?php echo $_SESSION['emailErr']; ?></span>
 
-<input> → value attribute use karta hai
 
+        <input type="tel" name="phone" value="<?php echo $_SESSION['old']['phone'] ?? ''; ?>" placeholder="Phone">
+        <span id="phoneErr" style="color:red;"><?php echo $_SESSION['phoneErr']; ?></span>
 
-<textarea> → andar content likhte hain
 
+        <input type="number" name="age" value="<?php echo $_SESSION['old']['age'] ?? ''; ?>" placeholder="Age">
+        <span id="ageErr" style="color:red;"><?php echo $_SESSION['ageErr']; ?></span>
+        <input type="password" name="password" value="<?php echo $_SESSION['old']['password'] ?? ''; ?>" placeholder="Password">
+        <span id="passwordErr" style="color:red;"><?php echo $_SESSION['passwordErr']; ?></span>
 
 
-⭐ Important Concept: Radio Buttons
-👉 Radio buttons me checked attribute use hota hai
-👉 checked = selected option
+        <input type="url" name="website" value="<?php echo $_SESSION['old']['website'] ?? ''; ?>" placeholder="Website">
+        <span id="websiteErr" style="color:red;"><?php echo $_SESSION['websiteErr']; ?></span>
 
-✅ Example:
-<input type="radio" name="gender" value="male"<?php if ($gender == "male") echo "checked"; ?>>Male
+        <button type="submit">Submit</button>
+    </form>
 
-🧠 Meaning:
+    <?php
+    // if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    //     unset(
+    //         $_SESSION['nameErr'],
+    //         $_SESSION['emailErr'],
+    //         $_SESSION['phoneErr'],
+    //         $_SESSION['ageErr'],
+    //         $_SESSION['passwordErr'],
+    //         $_SESSION['websiteErr'],
+    //         $_SESSION['old']
+    //     );
+    // }
 
+    // if (isset($_GET['success'])) {
+    //     echo "<script>alert('Form submitted successfully!');</script>";
+    // }
+    ?>
 
-Agar $gender == "male" → radio select hoga
+</body>
 
+</html>
 
 
-🎯 Real-Life Examples
+________________________________________________________________________________________________
 
-🧪 Example 1: Female Selected
-<input type="radio" name="gender" value="female"<?php if ($gender == "female") echo "checked"; ?>>
+************************************************************************************************
+************************************************************************************************
 
-🧪 Example 2: Male Selected
-<input type="radio" name="gender" value="male"<?php if ($gender == "male") echo "checked"; ?>>
-
-🧪 Example 3: Safe Check (Best Practice)
-<?php if (isset($gender) && $gender == "male") echo "checked"; ?>
-👉 isset() = check karta hai variable exist karta hai ya nahi
-
-⭐ Important Concept: isset()
-👉 isset() = check karta hai variable set hai ya nahi
-📌 Use kyu karte hain?
-👉 Error avoid karne ke liye
-
-🔥 Best Practice (Very Important)
-👉 Direct variable use na karo
-👉 Use:
-<?php echo $_POST['name'] ?? ''; ?>
-
-🧠 Meaning:
-
-
-?? = agar value nahi hai → empty string use karo
-
-
-
-🎯 Combined Example (Best Way)
-<input type="text" name="name" value="<?php echo $_POST['name'] ?? ''; ?>"><textarea name="comment"><?php echo $_POST['comment'] ?? ''; ?></textarea><input type="radio" name="gender" value="male"<?php if (($_POST['gender'] ?? '') == "male") echo "checked"; ?>>
-
-🚀 What You Achieve
-👉 Now:
-
-
-✅ Form values delete nahi honge
-
-
-✅ User experience better
-
-
-✅ Real-world behavior
-
-
-
-🧾 Final Simple Summary
-👉 Problem:
-
-
-Submit ke baad form empty ho jaata hai
-
-
-👉 Solution:
-
-
-PHP se values wapas fill karo
-
-
-💡 Simple line:
-👉 "User ka input save karke dobara show karo"
-
-Agar chaho next step me main:
-👉 error + value + success message (complete professional form) bana ke sikha sakta hoon 😎
