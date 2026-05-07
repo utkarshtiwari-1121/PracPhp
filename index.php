@@ -13,10 +13,10 @@
 
 <body>
     <script src="script.js" defer></script>
-    <!-- <?php
-            echo "Hello, World! its php";
+    <?php
+    // echo "Hello, World! its php";
 
-            ?> -->
+    ?>
 
     <!-- <h2>Contact Form</h2>
     <form action="formhandling.php" method="POST">
@@ -57,7 +57,6 @@
         <span id="nameErr" style="color:red;"></span>
 
 
-
         <input type="email" name="email" value="" placeholder="Email">
         <span id="emailErr" style="color:red;"></span>
 
@@ -71,11 +70,25 @@
         <input type="password" name="password" value="" placeholder="Password">
         <span id="passwordErr" style="color:red;"></span>
 
-
         <input type="url" name="website" value="" placeholder="Website">
         <span id="websiteErr" style="color:red;"></span>
 
-        <button type="submit">Submit</button>
+        <input type="checkbox" name="terms" id="terms">
+        <label for="terms">I agree to the terms and conditions</label>
+        <span id="termsErr" style="color:red;"></span>
+
+        <input type="file" accept=".jpg,.jpeg,.png">
+
+        <select name="country">
+            <option value="">Select Country</option>
+            <option value="India">India</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="Australia">Australia</option>
+        </select>
+
+                <button type="submit">Submit</button>
+
     </form>
 
     <?php
