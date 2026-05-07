@@ -359,3 +359,49 @@ ________________________________________________________________________________
 ************************************************************************************************
 ************************************************************************************************
 
+
+
+
+************************************************************************************************
+
+<?php
+
+// Check if file was uploaded
+if (!isset($_FILES['image'])) {
+    echo "No file uploaded.";
+    exit;
+}
+
+if ($_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+    echo "File upload error: " . $_FILES['image']['error'];
+    exit;
+}
+
+// Check if it's a valid uploaded file
+if (!is_uploaded_file($_FILES['image']['tmp_name'])) {
+    echo "File is not an uploaded file.";
+    exit;
+}
+
+// Check if directory is writable
+if (!is_writable('.')) {
+    echo "Current directory is not writable.";
+    exit;
+}
+
+// print_r($_FILES['image']);
+$path = $_FILES['image']['name'];
+echo "File name: " . $path . "<br>";
+$upload_path = $path;  // Upload to current directory
+echo "Upload path: " . $upload_path . "<br>";
+echo "Current directory: " . getcwd() . "<br>";
+
+if (move_uploaded_file($_FILES['image']['tmp_name'], $upload_path)) {
+    echo "File uploaded successfully";
+} else {
+    echo "File upload failed. Check directory permissions and path.";
+    echo "<br>Error details: " . error_get_last()['message'] ?? 'Unknown error';
+}
+?>
+
+************************************************************************************************

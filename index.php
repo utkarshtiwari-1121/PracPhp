@@ -48,7 +48,8 @@
 
 
     <!-- <form method="POST" action="validate.php">     <form method="POST" action="validate.php" id= "myForm">-->
-    <form method="POST" id="myForm">
+    <form method="POST" id="myForm" enctype="multipart/form-data">
+        <!-- <form method="POST" id="" action="uploads.php"> -->
         <h3>Simple Form</h3>
 
 
@@ -77,7 +78,8 @@
         <label for="terms">I agree to the terms and conditions</label>
         <span id="termsErr" style="color:red;"></span>
 
-        <input type="file" accept=".jpg,.jpeg,.png">
+        <input type="file" accept="" name="image">
+        <span id="imageErr" style="color:red;"></span>
 
         <select name="country">
             <option value="">Select Country</option>
@@ -87,12 +89,15 @@
             <option value="Australia">Australia</option>
         </select>
 
-                <button type="submit">Submit</button>
+        <button type="submit">Submit</button>
 
     </form>
 
-    <?php
-    ?>
+
+    <form method="POST" action="uploads/uploads.php" enctype="multipart/form-data">
+        <input type="file" accept=".jpg,.jpeg,.png" name="image">
+        <button type="submit">Upload</button>
+    </form>
 
 </body>
 
